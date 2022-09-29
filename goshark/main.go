@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -25,19 +26,26 @@ func ConvertText2PcapFile(iFilename string, oFilename string) {
 // Hex2Array accept a hex in string and transform it into string list
 // IN: var hex string = "00aabb"
 // return ["00", "aa", "bb"]
-func Hex2Array(hex string) (combinedHexArray []string) {
+func Hex2Array(hex string) ([]string, error) {
+	if len(hex)%2 != 0 {
+		return nil, errors.New("odd length of hex value")
+	}
+	var combinedHexArray []string
 	var hexArray []string = strings.Split(hex, "")
 
 	for i := 0; i < len(hexArray); i += 2 {
 		combinedHexArray = append(combinedHexArray, hexArray[i]+hexArray[i+1])
 	}
-	return
+	return combinedHexArray, nil
 }
 
 // DumpHex transform a string HEX value into text
 // format acceptable by the text2pcap
 func DumpHex(hex string) (hexdump []string) {
-	var hexArray []string = Hex2Array(hex)
+	hexArray, err := Hex2Array(hex)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// TODO this code can be much simplier
 	var line int
@@ -69,10 +77,6 @@ func WriteDumpHex(hex string, filename string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-type TSharkOutputSource struct {
-	Source map[string]interface{} `json:"_source"`
 }
 
 func DecodeTShark(filename string) string {
