@@ -1,4 +1,4 @@
-module github.com/PacketHelper/core/v2
+module github.com/PacketHelper/goshark/v2
 
 go 1.19
 
