@@ -1,4 +1,4 @@
-package api
+package gosharkapi
 
 import (
 	"net/http"
