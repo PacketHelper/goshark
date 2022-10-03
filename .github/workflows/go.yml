@@ -20,26 +20,26 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: Run tests
-        run: go test github.com/PacketHelper/goshark/v2/goshark -count=1
-      - name: Run tests with GC pressure
-        run: go test github.com/PacketHelper/goshark/v2/goshark -count=1
-        env:
-          GOGC: 1
+        run: make docker-test
+      # - name: Run tests with GC pressure
+      #   run: go test github.com/PacketHelper/goshark/v2/goshark -count=1
+      #   env:
+      #     GOGC: 1
       - name: Run tests with race detector
         run: go test -v -race github.com/PacketHelper/goshark/v2/goshark -count=1
-  coverage:
-    name: Coverage
-    runs-on: ubuntu-latest
-    steps:
-      - name: setup Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.18
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: Measure coverage
-        run: make cover
-      - uses: codecov/codecov-action@v2
-        with:
-          fail_ci_if_error: true
-          verbose: true
+  # coverage:
+  #   name: Coverage
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: setup Go
+  #       uses: actions/setup-go@v2
+  #       with:
+  #         go-version: 1.18
+  #     - name: checkout
+  #       uses: actions/checkout@v2
+  #     - name: Measure coverage
+  #       run: make cover
+  #     - uses: codecov/codecov-action@v2
+  #       with:
+  #         fail_ci_if_error: true
+  #         verbose: true

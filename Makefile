@@ -8,7 +8,11 @@ cover:
 
 .PHONY: docker
 docker:
-	docker -t goshark build .
+	docker build . -t goshark 
+
+.PHONY: docker-test
+docker-test:
+	docker build -f Dockerfile.test .  -t goshark
 
 .PHONY: test
 test:
