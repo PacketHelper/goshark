@@ -12,6 +12,7 @@ import (
 
 func SetUpRouter() *gin.Engine {
 	router := gin.Default()
+	gin.SetMode(gin.TestMode)
 	return router
 }
 
