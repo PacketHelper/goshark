@@ -1,4 +1,4 @@
-package main
+package goshark
 
 import (
 	"encoding/json"
@@ -108,9 +108,4 @@ func cleanUp(filenames []string) {
 			log.Fatal(err)
 		}
 	}
-}
-
-func main() {
-	output := DecodePacket(HEX)
-	fmt.Print(output)
 }
