@@ -13,6 +13,6 @@ COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
 COPY . .
-RUN go build -v goshark/main.go
+RUN go build -v main.go
 RUN chmod a+x main
 RUN ./main
