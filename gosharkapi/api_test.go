@@ -30,7 +30,7 @@ func TestStatusZHandler(t *testing.T) {
 }
 
 func TestGetHexHandler(t *testing.T) {
-	mockResponse := `{"hex": "0011aa", "hexdump":"0000 00 11 aa"}`
+	mockResponse := `{"hex":"00 11 aa","hexdump":["0000 00 11 aa"]}`
 
 	r := SetUpRouter()
 	r.GET("/api/v1/hex/:hex", GetHexHandler)
