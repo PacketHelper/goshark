@@ -11,8 +11,9 @@ import (
 )
 
 func SetUpRouter() *gin.Engine {
-	router := gin.Default()
 	gin.SetMode(gin.TestMode)
+
+	router := gin.Default()
 	return router
 }
 
