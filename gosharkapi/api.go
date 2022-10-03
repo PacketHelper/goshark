@@ -3,6 +3,7 @@ package gosharkapi
 import (
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/PacketHelper/goshark/v2/goshark"
 	"github.com/gin-gonic/gin"
@@ -20,12 +21,16 @@ func getHex(ctx *gin.Context) {
 	hexArray, err := goshark.Hex2Array(hexValue)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": "wrong packet",
+			"error": OddParity,
 		})
 		return
 	}
+
+	hexdump := goshark.DumpHex(hexValue)
+	goshark.DecodePacket(hexValue)
 	ctx.JSON(http.StatusOK, gin.H{
-		"hex": hexArray,
+		"hex":     strings.Join(hexArray, " "),
+		"hexdump": hexdump,
 	})
 }
 
