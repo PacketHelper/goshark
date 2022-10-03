@@ -15,7 +15,7 @@ func StatusZHandler(ctx *gin.Context) {
 	})
 }
 
-func getHexHandler(ctx *gin.Context) {
+func GetHexHandler(ctx *gin.Context) {
 	hexValue := ctx.Param("hex")
 
 	hexArray, err := goshark.Hex2Array(hexValue)
@@ -38,7 +38,7 @@ func HttpServer() {
 	r := gin.Default()
 	r.GET("/statusz", StatusZHandler)
 
-	r.GET("/api/v1/hex/:hex", getHexHandler)
+	r.GET("/api/v1/hex/:hex", GetHexHandler)
 	err := r.Run()
 	if err != nil {
 		log.Fatalf("cannot start http server %s", err)
