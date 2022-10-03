@@ -14,7 +14,7 @@ build:
 	go build -v main.go
 .PHONY: cover
 cover:
-	go test -coverprofile=cover.out ./...
+	go test -coverprofile=cover.out  github.com/PacketHelper/goshark/v2/goshark
 
 .PHONY: docker
 docker:

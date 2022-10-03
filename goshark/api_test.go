@@ -1,4 +1,4 @@
-package gosharkapi
+package goshark
 
 import (
 	"io/ioutil"

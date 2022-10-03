@@ -1,4 +1,4 @@
-package gosharkapi
+package goshark
 
 type Error string
 
