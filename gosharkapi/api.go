@@ -9,13 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func statusZ(ctx *gin.Context) {
+func StatusZHandler(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "ok",
 	})
 }
 
-func getHex(ctx *gin.Context) {
+func getHexHandler(ctx *gin.Context) {
 	hexValue := ctx.Param("hex")
 
 	hexArray, err := goshark.Hex2Array(hexValue)
@@ -36,9 +36,9 @@ func getHex(ctx *gin.Context) {
 
 func HttpServer() {
 	r := gin.Default()
-	r.GET("/statusz", statusZ)
+	r.GET("/statusz", StatusZHandler)
 
-	r.GET("/api/v1/hex/:hex", getHex)
+	r.GET("/api/v1/hex/:hex", getHexHandler)
 	err := r.Run()
 	if err != nil {
 		log.Fatalf("cannot start http server %s", err)
