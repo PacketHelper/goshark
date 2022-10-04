@@ -1,6 +1,7 @@
 package goshark
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -44,4 +45,9 @@ func TestGetHexHandler(t *testing.T) {
 	responseData, _ := ioutil.ReadAll(w.Body)
 	assert.Equal(t, mockResponse, string(responseData))
 	assert.Equal(t, http.StatusOK, w.Code)
+}
+
+func TestCreateRouter(t *testing.T) {
+	r := CreateRouter()
+	assert.Equal(t, fmt.Sprintf("%T", r), "*gin.Engine")
 }
