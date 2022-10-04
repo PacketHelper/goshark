@@ -12,7 +12,7 @@ docker:
 
 .PHONY: docker-coverage
 docker-test:
-	docker build -f Dockerfile.test . --build-arg CTOKEN=${CTOKEN} -t goshark && docker run goshark
+	docker build -f Dockerfile.coverage . --build-arg CTOKEN=${CTOKEN} -t goshark-coverage && docker run goshark-coverage
 
 .PHONY: test
 test:
