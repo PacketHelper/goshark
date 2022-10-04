@@ -16,4 +16,4 @@ COPY . .
 RUN go build -v main.go
 RUN chmod a+x main
 RUN chmod a+x entrypoint.sh
-ENTRYPOINT [ "entrypoint.sh" ]
+CMD [ "/usr/src/app/entrypoint.sh" ]
