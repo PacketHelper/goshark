@@ -11,7 +11,6 @@ func main() {
 	fmt.Print("Starting goshark api...")
 
 	router := goshark.CreateRouter()
-	router.Run()
 	if err := router.Run(); err != nil {
 		log.Fatalf("cannot start http server %s", err)
 	}
