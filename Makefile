@@ -14,12 +14,6 @@ docker:
 docker-test:
 	docker build -f Dockerfile.test .  -t goshark && docker run goshark
 
-.PHONY: docker-cover
-docker-cover:
-	ci_env=`bash <(curl -s https://codecov.io/env)`
-	docker build -f Dockerfile.test .  -t goshark
-	docker run $ci_env -e CI=true -t goshark
-
 .PHONY: test
 test:
 	go test github.com/PacketHelper/goshark/v2/goshark
