@@ -12,7 +12,7 @@ docker:
 
 .PHONY: docker-test
 docker-test:
-	docker build -f Dockerfile.test . --build-arg CTOKEN=${CODECOV} -t goshark && docker run goshark
+	docker build -f Dockerfile.test . --build-arg CTOKEN=9cb45320-48b3-4fb5-b41f-8886510b5de3 -t goshark && docker run goshark
 
 .PHONY: test
 test:
