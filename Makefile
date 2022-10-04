@@ -11,7 +11,7 @@ docker:
 	docker build . -t goshark 
 
 .PHONY: docker-coverage
-docker-test:
+docker-coverage:
 	docker build -f Dockerfile.coverage . --build-arg CTOKEN=${CTOKEN} -t goshark-coverage && docker run goshark-coverage
 
 .PHONY: test
