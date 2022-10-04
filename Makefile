@@ -12,7 +12,7 @@ docker:
 
 .PHONY: docker-test
 docker-test:
-	docker build -f Dockerfile.test .  -t goshark
+	docker build -f Dockerfile.test .  -t goshark && docker run goshark
 
 .PHONY: test
 test:
