@@ -12,8 +12,8 @@ WORKDIR /usr/src/app
 COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
-
-ENV CODECOV=$CODECOV
+ARG CTOKEN
+ENV CODECOV=${CTOKEN}
 COPY . .
 RUN go build -v main.go
 RUN chmod a+x main
