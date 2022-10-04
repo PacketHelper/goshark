@@ -1,7 +1,6 @@
 package goshark
 
 import (
-	"log"
 	"net/http"
 	"strings"
 
@@ -33,13 +32,10 @@ func GetHexHandler(ctx *gin.Context) {
 	})
 }
 
-func HttpServer() {
-	r := gin.Default()
-	r.GET("/statusz", StatusZHandler)
+func CreateRouter() (router *gin.Engine) {
+	router = gin.Default()
+	router.GET("/statusz", StatusZHandler)
 
-	r.GET("/api/v1/hex/:hex", GetHexHandler)
-	err := r.Run()
-	if err != nil {
-		log.Fatalf("cannot start http server %s", err)
-	}
+	router.GET("/api/v1/hex/:hex", GetHexHandler)
+	return
 }
