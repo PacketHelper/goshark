@@ -15,5 +15,5 @@ RUN go mod download && go mod verify
 COPY . .
 RUN go build -v main.go
 RUN chmod a+x main
-# RUN ./main
-RUN make test
+
+CMD ./main
