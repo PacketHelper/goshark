@@ -14,7 +14,7 @@ jobs:
       - name: Make Cover
         env:
           CODECOV: ${{ secrets.CODECOV }}
-        run: make docker-cover
+        run: make docker-test
   # test:
   #   name: Test
   #   strategy:
