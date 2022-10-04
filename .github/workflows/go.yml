@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Make Cover
         env:
-          CTOKEN: ${{ secrets.CODECOV }}
+          CTOKEN: ${{ secrets.CTOKEN }}
         run: make docker-test
   # test:
   #   name: Test
