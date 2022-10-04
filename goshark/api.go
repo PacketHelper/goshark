@@ -1,24 +1,23 @@
-package gosharkapi
+package goshark
 
 import (
 	"log"
 	"net/http"
 	"strings"
 
-	"github.com/PacketHelper/goshark/v2/goshark"
 	"github.com/gin-gonic/gin"
 )
 
-func statusZ(ctx *gin.Context) {
+func StatusZHandler(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "ok",
 	})
 }
 
-func getHex(ctx *gin.Context) {
+func GetHexHandler(ctx *gin.Context) {
 	hexValue := ctx.Param("hex")
 
-	hexArray, err := goshark.Hex2Array(hexValue)
+	hexArray, err := Hex2Array(hexValue)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": OddParity,
@@ -26,8 +25,8 @@ func getHex(ctx *gin.Context) {
 		return
 	}
 
-	hexdump := goshark.DumpHex(hexValue)
-	goshark.DecodePacket(hexValue)
+	hexdump := DumpHex(hexValue)
+	DecodePacket(hexValue)
 	ctx.JSON(http.StatusOK, gin.H{
 		"hex":     strings.Join(hexArray, " "),
 		"hexdump": hexdump,
@@ -36,9 +35,9 @@ func getHex(ctx *gin.Context) {
 
 func HttpServer() {
 	r := gin.Default()
-	r.GET("/statusz", statusZ)
+	r.GET("/statusz", StatusZHandler)
 
-	r.GET("/api/v1/hex/:hex", getHex)
+	r.GET("/api/v1/hex/:hex", GetHexHandler)
 	err := r.Run()
 	if err != nil {
 		log.Fatalf("cannot start http server %s", err)
