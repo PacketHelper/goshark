@@ -10,7 +10,7 @@ cover:
 docker:
 	docker build . -t goshark 
 
-.PHONY: docker-test
+.PHONY: docker-coverage
 docker-test:
 	docker build -f Dockerfile.test . --build-arg CTOKEN=${CTOKEN} -t goshark && docker run goshark
 
