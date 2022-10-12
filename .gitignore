@@ -16,3 +16,6 @@
 .txt
 .bin
 main
+
+.vscode/
+__debug_bin
