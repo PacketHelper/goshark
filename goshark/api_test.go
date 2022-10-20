@@ -1,7 +1,7 @@
 package goshark
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -26,7 +26,7 @@ func TestStatusZHandler(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	responseData, _ := ioutil.ReadAll(w.Body)
+	responseData, _ := io.ReadAll(w.Body)
 	assert.Equal(t, http.StatusOK, w.Code)
 	assert.Equal(t, mockResponse, string(responseData))
 }
@@ -41,7 +41,7 @@ func TestGetHexHandler(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	responseData, _ := ioutil.ReadAll(w.Body)
+	responseData, _ := io.ReadAll(w.Body)
 	assert.Equal(t, mockResponse, string(responseData))
 	assert.Equal(t, http.StatusOK, w.Code)
 }

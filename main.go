@@ -29,5 +29,6 @@ func findPyShark() {
 func main() {
 	fmt.Print("Starting goshark api...")
 	// goshark.HttpServer()
-	goshark.RunTSharkProcess()
+	// goshark.RunTSharkProcess()
+	goshark.CreateTSharkHeader()
 }
