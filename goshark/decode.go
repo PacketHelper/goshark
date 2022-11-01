@@ -93,7 +93,7 @@ func DecodeTShark(filename string) string {
 	return string(output)
 }
 
-func DecodeTSharkToPDML(filename string, higherAccuracy bool) string {
+func DecodeTSharkToPDML(filename string, higherAccuracy bool) Packet {
 	var accuracy = ""
 	if higherAccuracy {
 		accuracy = "-2"
@@ -106,12 +106,13 @@ func DecodeTSharkToPDML(filename string, higherAccuracy bool) string {
 
 	// parse output
 	start, stop := strings.Index(string(output), "<packet>"), strings.Index(string(output), "</packet>")
-	fmt.Printf("\n%s\n", output[start:stop+9])
 
 	var packet Packet
 	xml.Unmarshal(output[start:stop+9], &packet)
-	fmt.Println(packet)
-	return ""
+	// a, _ := json.Marshal(packet)
+	// fmt.Printf("%+v", a)
+	// return fmt.Sprintf("%+v", packet)
+	return packet
 }
 
 func DecodePacket(hex string) string {
@@ -125,7 +126,7 @@ func DecodePacket(hex string) string {
 	return DecodeTShark(outputFilename)
 }
 
-func DecodePacketXML(hex string) string {
+func DecodePacketXML(hex string, highAccuracy bool) Packet {
 	timeNow := fmt.Sprint(time.Now().UTC().UnixNano())
 	inputFilename, outputFilename := fmt.Sprintf("%s.txt", timeNow), fmt.Sprintf("%s.bin", timeNow)
 
@@ -133,7 +134,7 @@ func DecodePacketXML(hex string) string {
 	ConvertText2PcapFile(inputFilename, outputFilename)
 
 	defer cleanUp([]string{inputFilename, outputFilename})
-	return DecodeTSharkToPDML(outputFilename, false)
+	return DecodeTSharkToPDML(outputFilename, highAccuracy)
 }
 
 func cleanUp(filenames []string) {
