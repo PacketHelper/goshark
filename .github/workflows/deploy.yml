@@ -1,0 +1,27 @@
+name: Deploy
+on: [push]
+jobs:
+  push_to_registry:
+    name: Push Docker image to HerokuApp
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: http://goshark.herokuapp.com
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Login to Heroku Container registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+      - name: Build and push
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          heroku container:push web -a goshark
+      - name: Release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release web -a goshark

@@ -16,3 +16,7 @@
 .txt
 .bin
 main
+
+*.xml
+*.txt
+*.bin
