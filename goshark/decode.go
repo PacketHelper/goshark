@@ -2,6 +2,7 @@ package goshark
 
 import (
 	"encoding/json"
+	"encoding/xml"
 	"errors"
 	"fmt"
 	"log"
@@ -80,15 +81,37 @@ func WriteDumpHex(hex string, filename string) {
 }
 
 func DecodeTShark(filename string) string {
-	output, err := exec.Command("/bin/sh", "-c", fmt.Sprintf("tshark -x -r %s -T json", filename)).Output()
+	output, err := exec.Command("/bin/sh", "-c", fmt.Sprintf("tshark -x -r %s -T pdml", filename)).Output()
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(output)
 	tsharkOutput := []TSharkOutputSource{}
 	if err := json.Unmarshal(output, &tsharkOutput); err != nil {
 		log.Fatal(err)
 	}
 	return string(output)
+}
+
+func DecodeTSharkToPDML(filename string, higherAccuracy bool) string {
+	var accuracy = ""
+	if higherAccuracy {
+		accuracy = "-2"
+	}
+	cmds := fmt.Sprintf("tshark -r %s %s --disable-protocol json --disable-protocol xml -V -T pdml", filename, accuracy)
+	output, err := exec.Command("/bin/sh", "-c", cmds).Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// parse output
+	start, stop := strings.Index(string(output), "<packet>"), strings.Index(string(output), "</packet>")
+	fmt.Printf("\n%s\n", output[start:stop+9])
+
+	var packet Packet
+	xml.Unmarshal(output[start:stop+9], &packet)
+	fmt.Println(packet)
+	return ""
 }
 
 func DecodePacket(hex string) string {
@@ -100,6 +123,17 @@ func DecodePacket(hex string) string {
 
 	defer cleanUp([]string{inputFilename, outputFilename})
 	return DecodeTShark(outputFilename)
+}
+
+func DecodePacketXML(hex string) string {
+	timeNow := fmt.Sprint(time.Now().UTC().UnixNano())
+	inputFilename, outputFilename := fmt.Sprintf("%s.txt", timeNow), fmt.Sprintf("%s.bin", timeNow)
+
+	WriteDumpHex(hex, inputFilename)
+	ConvertText2PcapFile(inputFilename, outputFilename)
+
+	defer cleanUp([]string{inputFilename, outputFilename})
+	return DecodeTSharkToPDML(outputFilename, false)
 }
 
 func cleanUp(filenames []string) {
