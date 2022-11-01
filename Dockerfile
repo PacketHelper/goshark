@@ -17,6 +17,6 @@ RUN go build -v main.go
 RUN chmod a+x main
 
 # required for heroku app
-ARG PORT
-ENV PORT=${PORT}
+# ARG PORT
+# ENV PORT=${PORT}
 CMD ./main
